@@ -21,7 +21,15 @@ class Raindrop {
   void checkcatcher(Catcher c) {// so that the raindrop disappears from the screen when the catcher catches it
     if (dist(loc.x, loc.y, mouseX, 325) <= 50) {
       loc.set (-100, -100);
-      score++; //increases the score in the text everytime a raindrop is caught 
+      score++; //increases the score in the text everytime a raindrop is caught
+      vel.set (0,0);
+      accl.set (0,0); 
+    }
+    if (loc.y >= height) {
+      lives--; 
+      loc.set (-100, -100); 
+      vel.set (0,0);
+      accl.set (0,0); 
     }
   }
 }
