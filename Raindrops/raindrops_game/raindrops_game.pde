@@ -1,22 +1,37 @@
-Raindrop[] r; 
-Catcher c; 
-int oldtime;
-int index; 
-int score; 
-PImage background; 
+import ddf.minim.spi.*;
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.ugens.*;
+import ddf.minim.effects.*;
+
+
+Minim minim;
+AudioPlayer player;                                                     //music
+
+
+Raindrop[] r;                                                           //controls amount of raindrops that fall
+Catcher c;                                                              //catcher variable 
+int oldtime;                                                            //controls the time between raindrops falling
+int index;                                                              //for the individual raindrop 
+int score;                                                                //varible that controls score
+PImage background;                                                      //
 boolean run = false; 
-int lives = 5; 
-boolean gameOver; 
+int lives = 5;                                                             // subtracts one everytime the catcher misses the raindrop 
+boolean gameOver;   
 void setup() {
   size (480, 364);
   background = loadImage("background22.jpg");
-  PFont font = loadFont ("OldEnglishTextMT-48.vlw"); 
+  PFont font = loadFont ("OldEnglishTextMT-48.vlw");                       //changes the text style 
   textFont(font); 
   c = new Catcher();
-  r = new Raindrop[1000];//array for the raindrops 
+  r = new Raindrop[1000];                                                  //array for the raindrops 
   for (int i=0; i<r.length; i++) { 
     r[i] = new Raindrop();
   }
+  minim = new Minim(this);
+  player = minim.loadFile("Apartment.mp3");
+  player.loop();
 }
 
 void draw() {
@@ -35,7 +50,7 @@ void draw() {
       r[i].move();
       r[i].checkcatcher(c);
     }
-    if (millis() >= oldtime) {//rainsdrops fall indivdually based on timer
+    if (millis() >= oldtime) {                                                //rainsdrops fall indivdually based on timer
       index++;
       oldtime+= 3000;
     }
@@ -48,15 +63,15 @@ void draw() {
     gameOver= true;
   }
   if (gameOver == true) {
-    background = (loadImage ("eeyore.jpg")); 
+    background = (loadImage ("eeyore.jpg"));                                  //gameover image
     textSize (70); 
     textAlign (CENTER); 
-    text ("Game Over", width/2, height/2);
+    text ("Game Over", width/2, height/2);                                    //gameover text
   }
 }
-  void mouseClicked() {
-    if (mouseX > 280 && mouseX < 480 && mouseY < 200 && mouseY > 0) {
-      run= !run;
-    }
+void mouseClicked() {
+  if (mouseX > 280 && mouseX < 480 && mouseY < 200 && mouseY > 0) {
+    run= !run;
   }
+}
 
